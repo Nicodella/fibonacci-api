@@ -9,14 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fibonacci.fibonacci_api.service.FibonacciService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/fibonacci")
+@Tag(name = "Serie Fibonacci", description = "Serie Fibonacci")
 public class FibonacciController {
 
     @Autowired
     private FibonacciService service;
 
     @GetMapping("/{n}")
+    @Operation(summary = "Get Fibonacci(n)", description = "Calcula Fibonacci de un numero n.")
     public ResponseEntity<Long> getFibonacci(@PathVariable int n) {
         if (n <= 0) return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(service.getFibonacci(n));
