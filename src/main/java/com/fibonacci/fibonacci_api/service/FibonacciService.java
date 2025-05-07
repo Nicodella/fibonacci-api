@@ -14,15 +14,15 @@ public class FibonacciService {
 
     public long getFibonacci(int n) {
         return repository.findById(n).map(fib -> {
-            fib.setAccessCount(fib.getAccessCount() + 1);
+            fib.setCantAccedidos(fib.getCantAccedidos() + 1);
             repository.save(fib);
-            return fib.getValue();
+            return fib.getValor();
         }).orElseGet(() -> {
             long value = calculateFibonacci(n);
             FibonacciNumber fib = new FibonacciNumber();
-            fib.setN(n);
-            fib.setValue(value);
-            fib.setAccessCount(1);
+            fib.setId(null);
+            fib.setValor(value);
+            fib.setCantAccedidos(1);
             repository.save(fib);
             return value;
         });

@@ -3,49 +3,51 @@ package com.fibonacci.fibonacci_api.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "fibonacci_numbers")
 public class FibonacciNumber implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Integer n;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fibo_id")
+    private Integer id;
 
-    private Long value;
+    @Column(name = "fibo_valor")
+    private Long valor;
 
-    private Integer accessCount = 0;
+    @Column(name = "fibo_cant_accedido")
+    private Integer cantAccedidos = 0;
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getN() {
-        return n;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setN(Integer n) {
-        this.n = n;
+    public Long getValor() {
+        return valor;
     }
 
-    public Long getValue() {
-        return value;
+    public void setValor(Long valor) {
+        this.valor = valor;
     }
 
-    public void setValue(Long value) {
-        this.value = value;
+    public Integer getCantAccedidos() {
+        return cantAccedidos;
     }
 
-    public Integer getAccessCount() {
-        return accessCount;
+    public void setCantAccedidos(Integer cantAccedidos) {
+        this.cantAccedidos = cantAccedidos;
     }
-
-    public void setAccessCount(Integer accessCount) {
-        this.accessCount = accessCount;
-    }
-
-
-    
 }
