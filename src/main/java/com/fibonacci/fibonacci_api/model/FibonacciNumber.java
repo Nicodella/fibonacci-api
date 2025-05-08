@@ -2,6 +2,7 @@ package com.fibonacci.fibonacci_api.model;
 
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,9 +10,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "fibonacci_numbers")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FibonacciNumber implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -19,35 +26,15 @@ public class FibonacciNumber implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fibo_id")
-    private Integer id;
+    private int id;
+
+    @Column(name = "fibo_n")
+    private int n;
 
     @Column(name = "fibo_valor")
-    private Long valor;
+    private BigInteger valor;
 
     @Column(name = "fibo_cant_accedido")
-    private Integer cantAccedidos = 0;
+    private int cantAccedidos = 0;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Long getValor() {
-        return valor;
-    }
-
-    public void setValor(Long valor) {
-        this.valor = valor;
-    }
-
-    public Integer getCantAccedidos() {
-        return cantAccedidos;
-    }
-
-    public void setCantAccedidos(Integer cantAccedidos) {
-        this.cantAccedidos = cantAccedidos;
-    }
 }

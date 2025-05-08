@@ -1,5 +1,7 @@
 package com.fibonacci.fibonacci_api.controller;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +23,11 @@ public class FibonacciController {
     private FibonacciService service;
 
     @GetMapping("/{n}")
-    @Operation(summary = "Get Fibonacci(n)", description = "Calcula Fibonacci de un numero n.")
-    public ResponseEntity<Long> getFibonacci(@PathVariable int n) {
-        if (n <= 0) return ResponseEntity.badRequest().build();
+    @Operation(summary = "Get Fibonacci(n)", description = "Calcula Fibonacci de un numero n. Para el caso 0 que no existe, se devuelve -1")
+    public ResponseEntity<BigInteger> getFibonacci(@PathVariable int n) {
+        if (n <= 0) return ResponseEntity.badRequest().body(BigInteger.valueOf(-1));
         return ResponseEntity.ok(service.getFibonacci(n));
     }
+
 }
 

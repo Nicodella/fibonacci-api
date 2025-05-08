@@ -3,7 +3,11 @@ package com.fibonacci.fibonacci_api.service;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.math.BigInteger;
+
 import com.fibonacci.fibonacci_api.controller.FibonacciController;
+import com.fibonacci.fibonacci_api.service.impl.FibonacciServiceImpl;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +27,10 @@ public class FibonacciControllerTest {
 
     @Test
     void testGetFibonacci() throws Exception {
-        Mockito.when(fibonacciService.getFibonacci(5)).thenReturn(5L);
+        Mockito.when(fibonacciService.getFibonacci(5)).thenReturn(BigInteger.valueOf(5));
 
         mockMvc.perform(get("/api/fibonacci/5"))
-               .andExpect(status().isOk())
-               .andExpect(content().string("5"));
+            .andExpect(status().isOk())
+            .andExpect(content().string("5"));
     }
 }
