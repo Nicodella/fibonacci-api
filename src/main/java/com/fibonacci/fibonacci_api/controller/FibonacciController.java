@@ -1,12 +1,16 @@
 package com.fibonacci.fibonacci_api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fibonacci.fibonacci_api.model.FibonacciNumber;
 import com.fibonacci.fibonacci_api.service.FibonacciService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,5 +44,14 @@ public class FibonacciController {
         return ResponseEntity.ok(cant);
     }
 
+    @GetMapping("/masaccedido")
+    @Operation(summary = "Número más accedido", description = "Devuelve el número de Fibonacci más consultado")
+    public ResponseEntity<String> getMasAccedido() {
+        Optional<FibonacciNumber> masAccedido = service.getMasAccedido();
+        return masAccedido
+            .map(fibonacciNumber -> ResponseEntity.ok("El número más consultado es: " + fibonacciNumber.getN() + " con " + fibonacciNumber.getCantAccedidos() + " accesos."))
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No hay números registrados."));
+    }
 }
 

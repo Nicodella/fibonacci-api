@@ -1,6 +1,9 @@
 package com.fibonacci.fibonacci_api.service.impl;
 
 import java.math.BigInteger;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +53,12 @@ public class FibonacciServiceImpl implements FibonacciService{
             .map(fib -> String.valueOf(fib.getCantAccedidos()))
             .orElse("No hay valores para el n ingresado");
     }
+
+    @Override
+    public Optional<FibonacciNumber> getMasAccedido() {
+        List<FibonacciNumber> top = repository.findTopByAccesosDesc();
+        return top.isEmpty() ? Optional.empty() : Optional.of(top.get(0));
+    }
+
 }
 

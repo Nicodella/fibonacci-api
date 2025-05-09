@@ -5,12 +5,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fibonacci.fibonacci_api.model.FibonacciNumber;
 import com.fibonacci.fibonacci_api.service.FibonacciService;
 
 @WebMvcTest(FibonacciController.class)
@@ -54,6 +57,25 @@ public class FibonacciControllerTest {
         mockMvc.perform(get("/api/fibonacci/-1/cantaccesos"))
             .andExpect(status().isBadRequest())
             .andExpect(content().string("Fibonacci(n negativo) no existe"));
+    }
+
+        @Test
+    public void testGetMasAccedido_found() throws Exception {
+        FibonacciNumber fib = new FibonacciNumber();
+        fib.setN(5);
+        fib.setCantAccedidos(10);
+        when(service.getMasAccedido()).thenReturn(Optional.of(fib));
+        mockMvc.perform(get("/api/fibonacci/masaccedido"))
+            .andExpect(status().isOk()) 
+            .andExpect(content().string("El número más consultado es: 5 con 10 accesos.")); 
+    }
+
+    @Test
+    public void testGetMasAccedido_notFound() throws Exception {
+        when(service.getMasAccedido()).thenReturn(Optional.empty());
+        mockMvc.perform(get("/api/fibonacci/masaccedido"))
+            .andExpect(status().isNotFound())  
+            .andExpect(content().string("No hay números registrados."));  
     }
 
 }
