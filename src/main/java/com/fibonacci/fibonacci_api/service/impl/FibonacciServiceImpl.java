@@ -43,5 +43,11 @@ public class FibonacciServiceImpl implements FibonacciService{
         }
         return b;
     }
+
+    public int getCantAccesos(int n) {
+        return repository.findByN(n)
+            .map(FibonacciNumber::getCantAccedidos)
+            .orElse(-2);
+    }
 }
 
