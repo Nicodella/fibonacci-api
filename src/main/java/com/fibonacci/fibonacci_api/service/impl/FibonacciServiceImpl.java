@@ -18,15 +18,15 @@ public class FibonacciServiceImpl implements FibonacciService{
         return repository.findByN(n).map(fib -> {
             fib.setCantAccedidos(fib.getCantAccedidos() + 1);
             repository.save(fib);
-            return fib.getValor(); // ya es String
+            return fib.getValor(); 
         }).orElseGet(() -> {
-            BigInteger value = calculateFibonacci(n); // sigue siendo BigInteger internamente
+            BigInteger value = calculateFibonacci(n); 
             FibonacciNumber fib = new FibonacciNumber();
             fib.setN(n);
-            fib.setValor(value.toString()); // convertir a String para guardar
+            fib.setValor(value.toString()); 
             fib.setCantAccedidos(1);
             repository.save(fib);
-            return value.toString(); // devolver como String
+            return value.toString(); 
         });
     }
     
