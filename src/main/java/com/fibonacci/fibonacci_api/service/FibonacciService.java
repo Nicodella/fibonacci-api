@@ -1,10 +1,8 @@
 package com.fibonacci.fibonacci_api.service;
 
-import java.math.BigInteger;
-
 public interface FibonacciService {
     
-    public BigInteger getFibonacci(int n);
+    public String getFibonacci(int n);
     
-    public int getCantAccesos(int n);
+    public String getCantAccesos(int n);
 }

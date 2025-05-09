@@ -2,7 +2,6 @@ package com.fibonacci.fibonacci_api.model;
 
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +31,7 @@ public class FibonacciNumber implements Serializable{
     private int n;
 
     @Column(name = "fibo_valor")
-    private BigInteger valor;
+    private String valor;
 
     @Column(name = "fibo_cant_accedido")
     private int cantAccedidos = 0;

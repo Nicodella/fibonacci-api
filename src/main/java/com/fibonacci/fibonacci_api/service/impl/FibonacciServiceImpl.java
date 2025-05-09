@@ -14,21 +14,22 @@ public class FibonacciServiceImpl implements FibonacciService{
     @Autowired
     private FibonacciRepository repository;
 
-    public BigInteger getFibonacci(int n) {
+    public String getFibonacci(int n) {
         return repository.findByN(n).map(fib -> {
             fib.setCantAccedidos(fib.getCantAccedidos() + 1);
             repository.save(fib);
-            return fib.getValor();
+            return fib.getValor(); // ya es String
         }).orElseGet(() -> {
-            BigInteger value = calculateFibonacci(n);
+            BigInteger value = calculateFibonacci(n); // sigue siendo BigInteger internamente
             FibonacciNumber fib = new FibonacciNumber();
             fib.setN(n);
-            fib.setValor(value);
+            fib.setValor(value.toString()); // convertir a String para guardar
             fib.setCantAccedidos(1);
             repository.save(fib);
-            return value;
+            return value.toString(); // devolver como String
         });
     }
+    
 
     public BigInteger calculateFibonacci(int n) {
         if (n == 0) return BigInteger.ZERO;
@@ -44,10 +45,10 @@ public class FibonacciServiceImpl implements FibonacciService{
         return b;
     }
 
-    public int getCantAccesos(int n) {
+    public String getCantAccesos(int n) {
         return repository.findByN(n)
-            .map(FibonacciNumber::getCantAccedidos)
-            .orElse(-2);
+            .map(fib -> String.valueOf(fib.getCantAccedidos()))
+            .orElse("No hay valores para el n ingresado");
     }
 }
 
